@@ -1,0 +1,32 @@
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+import numpy as np
+
+def update_plot():
+    y = np.sin(x + update_plot.counter)
+    line.set_ydata(y)
+    update_plot.counter += 0.1
+    canvas.draw()
+
+# Initialize Tkinter window
+root = tk.Tk()
+root.title("Matplotlib with Tkinter")
+
+# Create a figure and axis for plotting
+fig, ax = plt.subplots()
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+line, = ax.plot(x, y)
+
+# Embed Matplotlib figure in Tkinter window
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.get_tk_widget().pack()
+
+# Button to update plot
+update_plot.counter = 0
+button = tk.Button(root, text="Update Plot", command=update_plot)
+button.pack()
+
+# Start Tkinter event loop
+root.mainloop()
